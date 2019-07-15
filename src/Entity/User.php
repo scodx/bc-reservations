@@ -24,28 +24,28 @@ class User
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="decimal", precision=45, scale=0, nullable=false)
+     * @ORM\Column(name="first_name", type="string", precision=100, scale=0, nullable=false)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=45, nullable=false)
+     * @ORM\Column(name="last_name", type="string", length=100, nullable=false)
      */
     private $lastName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=45, nullable=true)
+     * @ORM\Column(name="email", type="string", length=45, nullable=false)
      */
     private $email;
 
@@ -98,7 +98,11 @@ class User
 
     public function getName(): ?string
     {
-        return $this->name;
+        $name = $this->name;
+        if (!strlen($name)) {
+          $name = $this->getFirstName() .' '. $this->getLastName();
+        }
+        return $name;
     }
 
     public function setName(?string $name): self
