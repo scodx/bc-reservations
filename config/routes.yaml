@@ -1,3 +1,23 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+get_user:
+  path: /api/v1/users/{uid}
+  controller: App\Controller\UserController::get
+  methods: [GET]
+  format: json
+  requirements:
+    _format:  json
+    uid: \d+
+update_user:
+  path: /api/v1/users/{uid}
+  controller: App\Controller\UserController::update
+  methods: [PATCH]
+  format: json
+  requirements:
+    _format:  json
+    uid: \d+
+create_user:
+  path: /api/v1/users
+  controller: App\Controller\UserController::create
+  methods: [POST]
+  format: json
+  requirements:
+    _format:  json
