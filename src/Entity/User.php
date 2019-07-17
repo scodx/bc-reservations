@@ -148,7 +148,7 @@ class User
     return $this;
   }
 
-  public function getIsHost(): ?int
+  public function getIsHost(): ?bool
   {
     return $this->isHost;
   }

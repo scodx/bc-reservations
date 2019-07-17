@@ -21,3 +21,11 @@ create_user:
   format: json
   requirements:
     _format:  json
+
+create_reservations:
+  path: /api/v1/users/{host}/reservations
+  controller: App\Controller\UserController::create
+  methods: [POST]
+  format: json
+  requirements:
+    _format:  json

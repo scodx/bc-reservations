@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
+use App\Service\UserService;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,11 +39,12 @@ class UserController extends AbstractController
 
   }
 
-  public function update (Request $request)
+  public function update ($uid, Request $request)
   {
-    $user = $this->getDoctrine()
-      ->getRepository(User::class)
-      ->find($request->query->get('uid'));
+    $userRepository = $this->getDoctrine()
+      ->getRepository(UserRepository::class);
+     $user = $userRepository
+      ->find($uid);
 
     if (!$user) {
       return new JsonResponse([
@@ -52,6 +55,8 @@ class UserController extends AbstractController
         ]
       ], 404);
     }
+
+    $userRepository->update($this->getDoctrine()->getManager(), $user, $request);
 
     return new JsonResponse([
       'message' => 'success',

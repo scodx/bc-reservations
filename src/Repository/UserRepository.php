@@ -1,14 +1,21 @@
 <?php
 
-namespace App\Service;
+namespace App\Repository;
 
 use App\Entity\User;
 use DateTime;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class UserService
+class UserRepository extends ServiceEntityRepository
 {
+  public function __construct(RegistryInterface $registry)
+  {
+    parent::__construct($registry, User::class);
+  }
+
   public function update (ObjectManager $entityManager, User $user, Request $request)
   {
     $now = new DateTime();
@@ -26,5 +33,4 @@ class UserService
     $user->setUpdatedAt($now);
     $entityManager->flush($user);
   }
-
 }
